@@ -39,8 +39,6 @@ public void draw()
       if (dist((float)field.get(z).getCenterX(),(float)field.get(z).getCenterY(),(float)proj.getCenterX(),(float)proj.getCenterY()) <= 8 ){
         field.remove(z);
         round.remove(i);
-        z--;
-        i--;
         break;
       }
     }
