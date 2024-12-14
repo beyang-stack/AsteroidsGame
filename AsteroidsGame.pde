@@ -1,6 +1,7 @@
 Spaceship craft = new Spaceship();
 Star [] galaxy = new Star[100];
 ArrayList <Asteroid> field = new ArrayList <Asteroid>();
+ArrayList <Bullet> round = new ArrayList <Bullet>();
 public void setup() 
 {
  size(600,600);
@@ -21,6 +22,7 @@ public void draw()
   }
   craft.move();
   craft.show();
+  
   for( int i = 0; i < field.size(); i++){
     Asteroid rock = field.get(i);
     rock.move();
@@ -29,6 +31,21 @@ public void draw()
     }
     rock.show();
   }
+  
+  for( int i = 0; i < round.size(); i++){
+    Bullet proj = round.get(i);
+    proj.move();
+    for( int z = 0; z < field.size(); z++){
+      if (dist((float)field.get(z).getCenterX(),(float)field.get(z).getCenterY(),(float)proj.getCenterX(),(float)proj.getCenterY()) <= 8 ){
+        field.remove(z);
+        round.remove(i);
+        z--;
+        i--;
+        break;
+      }
+    }
+    proj.show();
+  }
 }
 
 public void keyPressed(){
@@ -36,13 +53,13 @@ public void keyPressed(){
     craft.accelerate(1);
   }
   if( key == 'a'){
-    craft.turn(30);
+    craft.turn(-30);
   }
   if( key == 's'){
     craft.accelerate(-1);
   }
   if( key == 'd'){
-    craft.turn(-30);
+    craft.turn(30);
   }
   if( key == 'q'){
     craft.setXspeed(0);
@@ -52,6 +69,9 @@ public void keyPressed(){
     craft.turn((double)(Math.random()*360));
     craft.setCenterX((double)(Math.random()*600));
     craft.setCenterY((double)(Math.random()*600));
+  }
+  if(key == 32){
+    round.add(new Bullet());
   }
   
   
